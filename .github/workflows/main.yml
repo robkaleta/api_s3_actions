@@ -21,16 +21,16 @@ jobs:
 # Groups together all the steps that run in the `check-bats-version` job. Each item nested under this section is a separate action or shell script.
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
       - name: Install dependencies
         run: |
-          pip install boto3
+          pip install boto3, requests
       - name: Run Python script
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
