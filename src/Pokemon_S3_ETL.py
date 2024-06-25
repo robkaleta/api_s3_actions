@@ -3,15 +3,24 @@ import boto3
 from botocore.exceptions import ClientError
 import requests
 import json
-import random 
+import os 
 
-def assume_role(profile):
+def assume_role():
     '''
     Creates initial session with specified profile - that user has no other permissions
     Allows uses to assume to temporary role that has access to S3 - everything pre configured in AWS Console
     '''
     try:
-        session = boto3.Session(profile_name = profile)
+        aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
+        aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
+       
+    # Create a boto3 session
+        session = boto3.Session(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            region_name='eu-west-2'
+            )
+        
         # create sts client using the session object
         sts_client = session.client('sts', region_name='eu-west-2')
         # assume role with correct permissions
@@ -89,7 +98,7 @@ def upload_to_bucket(S3client, json_file ,file_name):
 def main():
 
     # start initial AWS session    
-    temp_session_new = assume_role(profile = 'S3_ReadWrite')
+    temp_session_new = assume_role()
     
     # create new client using temp session
     s3_client = temp_session_new.client('s3',region_name='eu-west-2')
