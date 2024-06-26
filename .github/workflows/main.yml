@@ -5,7 +5,7 @@ run-name: ${{ github.actor }} is learning GitHub Actions
 #on: workflow_dispatch
 on:
   schedule:
-    - cron: "40 21 * * *"  # This cron expression runs the workflow daily at midnight UTC
+    - cron: "46 21 * * *"  # This cron expression runs the workflow daily at midnight UTC
 
 
 # Groups together all the jobs that run in the `learn-github-actions` workflow.
